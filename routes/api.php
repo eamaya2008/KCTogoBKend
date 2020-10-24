@@ -32,15 +32,27 @@ Route::group(['middleware' => ['cors']], function () {
 
     Route::get('contactos','ContactosController@lista');
 
-    Route::get('contactos/codigo/{codCli}','ContactosController@porCodCli');
+    Route::get('contactos/codigo/{cotCod}','ContactosController@porCotCod');
 
     Route::get('contactos/list','ContactosController@porPagina');
 
     Route::get('contactos/nombre/{nombre}','ContactosController@porNombre');
 
     Route::get('contactos/empresa/{cliRazSoc}','ContactosController@porEmpresa');
+
+    Route::get('contactos/empresa/cliCod/{cliCod}','ContactosController@porCliCod');
     
     Route::post('contactos/altaContacto','ContactosController@altaContacto');
+
+    Route::post('contactos/modiContacto','ContactosController@modiContacto');
+
+    /**/
+
+    /**Tickets**/
+
+    Route::get('tickets/sinCerrar', 'TicketsController@listadoSinCerrar');
+
+    Route::get('tickets/{id}', 'TicketsController@porId');
 });
 
 

@@ -16,8 +16,8 @@ class ContactosController extends Controller
         "cotcli_codigo",
         "cli_razsoc",
         "cot_codigo", 
-        "cot_Nombre",
-        "cot_Email",
+        "cot_nombre",
+        "cot_email",
         "cot_telefono"
          )
          ->join("clientes","cotcli_codigo","=","cli_cod")
@@ -31,25 +31,28 @@ class ContactosController extends Controller
         "cotcli_codigo",
         "cli_razsoc",
         "cot_codigo", 
-        "cot_Nombre",
-        "cot_Email",
+        "cot_nombre",
+        "cot_email",
         "cot_telefono"
          )
          ->join("clientes","cotcli_codigo","=","cli_cod")         
          ->orderBy("cot_nombre","asc")
-         ->paginate(15);
+         ->paginate(13);
       return response($contacto, 200);
    }
 
-   public function porCodCli($codCli){
+   public function porCotCod($cotCod){
+
        $contactos=Contacto::select(
         "cotcli_codigo",
+        "cli_razsoc",
         "cot_codigo", 
-        "cot_Nombre",
-        "cot_Email",
+        "cot_nombre",
+        "cot_email",
         "cot_telefono"
          )
-         ->where("cotcli_codigo","=",$codCli)
+         ->join("clientes","cotcli_codigo","=","cli_cod")
+         ->where("cot_codigo","=",$cotCod)
          ->get();
       return response()->json($contactos);
    }
@@ -59,14 +62,14 @@ class ContactosController extends Controller
         "cotcli_codigo",
         "cli_razsoc",
         "cot_codigo", 
-        "cot_Nombre",
-        "cot_Email",
+        "cot_nombre",
+        "cot_email",
         "cot_telefono"
          )
          ->join("clientes","cotcli_codigo","=","cli_cod")
          ->where("cli_razsoc","like","%$razSoc%")
          ->orderBy("cli_razsoc","asc")
-         ->paginate(15);
+         ->paginate(13);
       return response()->json($contacto);
    }
 
@@ -75,16 +78,31 @@ class ContactosController extends Controller
         "cotcli_codigo",
         "cli_razsoc",
         "cot_codigo", 
-        "cot_Nombre",
-        "cot_Email",
+        "cot_nombre",
+        "cot_email",
         "cot_telefono"
          )
          ->join("clientes","cotcli_codigo","=","cli_cod")
          ->where("cot_Nombre","like","%$nombre%")
          ->orderBy("cot_nombre","asc")        
-         ->paginate(15);
+         ->paginate(13);
       return response()->json($contacto);
    }
+
+   public function porCliCod($cliCod){
+      $contacto=Contacto::select(
+        "cotcli_codigo",
+        "cot_codigo", 
+        "cot_nombre",
+        "cot_email",
+        "cot_telefono"
+         )
+         ->where("cotcli_codigo","=","$cliCod")
+         ->orderBy("cot_nombre","asc")
+         ->get();
+      return response()->json($contacto);
+      }
+
    /**/
    /*ALTA CONTACTO*/
    public function altaContacto(Request $req){
@@ -135,6 +153,20 @@ class ContactosController extends Controller
       $contactoNuevo->cot_principal=0;
 
       $contactoNuevo->save();
+
+      return response()->json(201);
+   }
+
+   public function modiContacto(Request $req){
+
+      $contacto = Contacto::find($req["cot_codigo"]);
+
+      $contacto->where('cot_codigo', $req["cot_codigo"])
+               ->update([
+                  "cot_Nombre"=>$req["cot_nombre"],
+                  "cot_EMail"=>$req["cot_email"],
+                  "cot_Telefono"=>$req["cot_telefono"]
+               ]);
 
       return response()->json(201);
    }
