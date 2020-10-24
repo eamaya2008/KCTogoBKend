@@ -53,6 +53,13 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('tickets/sinCerrar', 'TicketsController@listadoSinCerrar');
 
     Route::get('tickets/{id}', 'TicketsController@porId');
+
+    /**/
+
+    /** Vendedor **/
+
+    Route::get('vendedores/activos', 'VendedoresController@listadoActivos');
+
 });
 
 
