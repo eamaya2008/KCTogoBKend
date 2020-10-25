@@ -16,7 +16,7 @@ class VendedoresController extends Controller
          )
          ->join("dtsvendedor","vendedor.ven_cod","=","dtsvendedor.ven_cod")
          ->where("dven_activo","=", "1")
-         ->orderBy("ven_desc","asc")
+         ->orderBy("ven_cod","asc")
          ->get();
       return response()->json($vendedores);
    }
