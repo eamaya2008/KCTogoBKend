@@ -25,7 +25,8 @@ class TicketsController extends Controller
             "tik_tipo",
             "tik_modulo",
             "tik_tema",
-            "tik_notes"
+            "tik_notes",
+            "tik_hsContact"
         )
         ->where("tik_estado","<>","C")
         ->orderBy("tik_id","desc")
